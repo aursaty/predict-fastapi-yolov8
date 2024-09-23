@@ -3,6 +3,7 @@ RUN pip3 install fastapi uvicorn
 RUN pip3 install typing
 RUN pip3 install python-multipart
 RUN pip3 install aiofiles
+RUN pip3 install logger
 COPY . /app
 WORKDIR /app
 # CMD uvicorn app:app
