@@ -8,7 +8,7 @@ model = YOLO("yolov8n.pt")
 
 
 def get_image_from_bytes(binary_image: bytes) -> Image:
-    """Convert image from bytes to PIL RGB format
+    """Safely convert image from bytes to PIL RGB format
     
     Args:
         binary_image (bytes): The binary representation of the image
@@ -16,8 +16,12 @@ def get_image_from_bytes(binary_image: bytes) -> Image:
     Returns:
         PIL.Image: The image in PIL RGB format
     """
-    input_image = Image.open(io.BytesIO(binary_image)).convert("RGB")
-    return input_image
+    try:
+        input_image = Image.open(io.BytesIO(binary_image)).convert("RGB")
+        return input_image
+    except (IOError, SyntaxError):
+        raise IOError("Image expected, check file extention!")
+        return False
 
 
 def predict(file: bytes):
